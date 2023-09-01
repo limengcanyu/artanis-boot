@@ -1,0 +1,14 @@
+//######################################################################################################################
+### spring-boot-validation validate
+POST http://localhost:8080/validate
+Content-Type: application/json
+
+{
+  "id": 999,
+  "value": "content"
+}
+
+### spring-boot-validation save
+GET http://localhost:8080/save
+Accept: application/json
+

@@ -1,0 +1,15 @@
+### save
+GET http://localhost:8081/user/save
+Accept: application/json
+
+### update
+GET http://localhost:8081/user/update
+Accept: application/json
+
+### query
+GET http://localhost:8081/user/query
+Accept: application/json
+
+### delete
+GET http://localhost:8081/user/delete
+Accept: application/json

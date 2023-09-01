@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: redisson
+
+logging:
+  level:
+    com.spring.boot: debug

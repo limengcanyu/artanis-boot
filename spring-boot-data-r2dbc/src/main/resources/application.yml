@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+# DataSource Config
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://192.168.242.129/postgres
+    username: postgres
+    password: PassW0rd321
+#    url: r2dbc:mysql://192.168.242.129:3306/artanis?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+#    username: root
+#    password: PassW0rd321
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-postgre.sql
+      data-locations: classpath:db/data-postgre.sql
+#      schema-locations: classpath:db/schema-mysql.sql
+#      data-locations: classpath:db/data-mysql.sql

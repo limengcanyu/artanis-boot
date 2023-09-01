@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.boot.mybatis.plus.mapper.UserMapper">
+
+    <select id="selectFetchSize" fetchSize="10000" resultType="com.spring.boot.mybatis.plus.entity.User">
+        select * from t_user where id <![CDATA[ <= ]]> 10
+    </select>
+
+    <select id="selectJoin" resultType="com.spring.boot.mybatis.plus.vo.UserAddressVO">
+        select
+            tu.id      uId,
+            tu.name    uName,
+            tu.age     uAge,
+            tu.email   uEmail,
+            ta.id      aId,
+            ta.user_id aUserId,
+            ta.name    aName
+        from
+            t_user tu
+                left join t_address ta on tu.id = ta.user_id
+        where
+            tu.id <![CDATA[ <= ]]> 10
+    </select>
+</mapper>

@@ -1,0 +1,2 @@
+pulsar:
+  service-url: pulsar://192.168.242.129:6650

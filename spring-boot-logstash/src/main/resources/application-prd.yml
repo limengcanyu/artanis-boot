@@ -1,0 +1,4 @@
+logging:
+  config: classpath:logback-spring-prd.xml
+  level:
+    com.spring.boot: debug

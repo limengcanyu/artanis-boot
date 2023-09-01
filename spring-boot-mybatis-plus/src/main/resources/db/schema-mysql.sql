@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `db`.t_user;
+
+CREATE TABLE `db`.t_user
+(
+    id    BIGINT(20)  AUTO_INCREMENT    COMMENT '主键ID',
+    name  VARCHAR(30) NULL DEFAULT NULL COMMENT '姓名',
+    age   INT(11)     NULL DEFAULT NULL COMMENT '年龄',
+    email VARCHAR(50) NULL DEFAULT NULL COMMENT '邮箱',
+    PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS `db`.t_address;
+
+CREATE TABLE `db`.t_address
+(
+    id      BIGINT(20)  AUTO_INCREMENT    COMMENT '主键ID',
+    user_id BIGINT(20)  NULL DEFAULT NULL COMMENT 'userId',
+    name    VARCHAR(30) NULL DEFAULT NULL COMMENT '名称',
+    PRIMARY KEY (id)
+);

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring-boot-prometheus
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+logging:
+  level:
+    com.spring.boot.prometheus: debug

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.6</version>
+    </parent>
+
+    <groupId>com.spring.boot.alice</groupId>
+    <artifactId>spring-boot-alice</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1</version>
+
+    <modules>
+        <module>spring-boot-activiti</module>
+        <module>spring-boot-arthas</module>
+        <module>spring-boot-camunda</module>
+        <module>spring-boot-elasticsearch</module>
+        <module>spring-boot-example</module>
+        <module>spring-boot-flowable</module>
+        <module>spring-boot-jib</module>
+        <module>spring-boot-logstash</module>
+        <module>spring-boot-mybatis-plus</module>
+        <module>spring-boot-netty</module>
+        <module>spring-boot-netty-client</module>
+        <module>spring-boot-netty-common</module>
+        <module>spring-boot-netty-server</module>
+        <module>spring-boot-prometheus</module>
+        <module>spring-boot-pulsar</module>
+        <module>spring-boot-quartz</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-redis</module>
+        <module>spring-boot-redis-jedis</module>
+        <module>spring-boot-redis-redisson</module>
+        <module>spring-boot-resilience4j</module>
+        <module>spring-boot-rocketmq-example</module>
+        <module>spring-boot-security</module>
+        <module>spring-boot-shardingsphere</module>
+        <module>spring-boot-skywalking</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>org.activiti</groupId>-->
+<!--                <artifactId>activiti-dependencies</artifactId>-->
+<!--                <version>7.4.0</version>-->
+<!--                <scope>import</scope>-->
+<!--                <type>pom</type>-->
+<!--            </dependency>-->
+
+            <!-- https://mvnrepository.com/artifact/com.yomahub/tlog-all-spring-boot-starter -->
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>tlog-all-spring-boot-starter</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.5</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>activiti-releases</id>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <!-- Skipping Tests -->
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

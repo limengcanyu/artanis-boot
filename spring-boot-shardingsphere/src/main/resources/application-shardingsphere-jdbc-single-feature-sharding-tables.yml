@@ -1,0 +1,56 @@
+# 单库分表
+
+spring.shardingsphere.mode.type: Memory
+
+# 配置真实数据源
+spring.shardingsphere.datasource.names: ds
+
+# 配置第 1 个数据源
+spring.shardingsphere.datasource.ds.type: com.zaxxer.hikari.HikariDataSource
+# 原生方式，不打印SQL
+spring.shardingsphere.datasource.ds.driver-class-name: com.mysql.cj.jdbc.Driver
+spring.shardingsphere.datasource.ds.jdbc-url: jdbc:mysql://192.168.136.135:3306/ds?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+# MybatisPlus打印SQL
+#spring.shardingsphere.datasource.ds.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#spring.shardingsphere.datasource.ds.jdbc-url: jdbc:p6spy:mysql://192.168.136.135:3306/ds?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+spring.shardingsphere.datasource.ds.username: root
+spring.shardingsphere.datasource.ds.password: PassW0rd321
+
+# 标准分片表配置
+# t_order
+# 由数据源名 + 表名组成，以小数点分隔。多个表以逗号分隔，支持 inline 表达式。
+# 缺省表示使用已知数据源与逻辑表名称生成数据节点，用于广播表（即每个库中都需要一个同样的表用于关联查询，多为字典表）或只分库不分表且所有库的表结构完全一致的情况
+spring.shardingsphere.rules.sharding.tables.t_order.actual-data-nodes: ds.t_order_$->{0..1}
+# 分库策略，缺省表示使用默认分库策略
+# 用于单分片键的标准分片场景
+spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-column: order_id # 分片列名称
+spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-algorithm-name: t-order-inline # 分片算法名称
+# 分布式序列策略配置
+spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.column: order_id # 分布式序列列名称
+spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.key-generator-name: snowflake # 分布式序列算法名称
+
+# t_order_item
+spring.shardingsphere.rules.sharding.tables.t_order_item.actual-data-nodes: ds.t_order_item_$->{0..1}
+spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-column: order_id
+spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-algorithm-name: t-order-item-inline
+spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.column: order_item_id
+spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.key-generator-name: snowflake
+
+# 绑定表规则列表
+spring.shardingsphere.rules.sharding.binding-tables[0]: t_order,t_order_item # 绑定表规则列表，必须使用分片键进行关联，否则会出现笛卡尔积关联或跨库关联
+
+# 分片算法配置
+# t_order
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.type: INLINE # 分片算法类型
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.props.algorithm-expression: t_order_$->{order_id % 2} # 分片算法属性配置
+
+# t_order_item
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-item-inline.type: INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-item-inline.props.algorithm-expression: t_order_item_$->{order_id % 2}
+
+# 分布式序列算法配置
+# 分布式序列算法名称为 snowflake 的类型为 SNOWFLAKE
+spring.shardingsphere.rules.sharding.key-generators.snowflake.type: SNOWFLAKE # 分布式序列算法类型
+
+# sharding-jdbc打印SQL
+spring.shardingsphere.props.sql-show: true

@@ -1,0 +1,64 @@
+# 分库分表 默认根据user_id分库，t_order和t_order_item表再根据order_id分表
+
+spring.shardingsphere.mode.type: Standalone
+spring.shardingsphere.mode.repository.type: File
+spring.shardingsphere.mode.overwrite: true
+
+# datasource
+spring.shardingsphere.datasource.names: ds-0,ds-1
+
+spring.shardingsphere.datasource.ds-0.type: com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.ds-0.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.ds-0.jdbc-url: jdbc:p6spy:mysql://192.168.136.135:3306/ds-0?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.ds-0.username: root
+spring.shardingsphere.datasource.ds-0.password: PassW0rd321
+
+spring.shardingsphere.datasource.ds-1.type: com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.ds-1.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.ds-1.jdbc-url: jdbc:p6spy:mysql://192.168.136.135:3306/ds-1?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.ds-1.username: root
+spring.shardingsphere.datasource.ds-1.password: PassW0rd321
+
+# database-strategy
+spring.shardingsphere.rules.sharding.default-database-strategy.standard.sharding-column: user_id
+spring.shardingsphere.rules.sharding.default-database-strategy.standard.sharding-algorithm-name: database-inline
+
+# binding-tables
+spring.shardingsphere.rules.sharding.binding-tables[0]: t_order,t_order_item
+
+# broadcast-tables
+# 广播表，新增的时候会在所有的数据源中新增相同数据
+spring.shardingsphere.rules.sharding.broadcast-tables: t_address
+
+# t_order
+spring.shardingsphere.rules.sharding.tables.t_order.actual-data-nodes: ds-$->{0..1}.t_order_$->{0..1}
+spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-column: order_id
+spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-algorithm-name: t-order-inline
+
+spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.column: order_id
+spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.key-generator-name: snowflake
+
+
+# t_order_item
+spring.shardingsphere.rules.sharding.tables.t_order_item.actual-data-nodes: ds-$->{0..1}.t_order_item_$->{0..1}
+spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-column: order_id
+spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-algorithm-name: t-order-item-inline
+
+spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.column: order_item_id
+spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.key-generator-name: snowflake
+
+# algorithms
+spring.shardingsphere.rules.sharding.sharding-algorithms.database-inline.type: INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.database-inline.props.algorithm-expression: ds-$->{user_id % 2}
+
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.type: INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-inline.props.algorithm-expression: t_order_$->{order_id % 2}
+
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-item-inline.type: INLINE
+spring.shardingsphere.rules.sharding.sharding-algorithms.t-order-item-inline.props.algorithm-expression: t_order_item_$->{order_id % 2}
+
+# key-generators
+spring.shardingsphere.rules.sharding.key-generators.snowflake.type: SNOWFLAKE
+
+# sharding-jdbc打印SQL
+spring.shardingsphere.props.sql-show: true

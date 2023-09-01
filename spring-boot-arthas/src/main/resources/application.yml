@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+arthas:
+  agent-id: URJZ5L48RPBR2ALI5K4V  #需手工指定agent-id
+  tunnel-server: ws://127.0.0.1:7777/ws
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "arthas"
+

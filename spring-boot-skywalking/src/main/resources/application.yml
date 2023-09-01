@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.242.129:3306/db?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: PassW0rd321
+
+# Logger Config
+logging:
+  level:
+    com.spring.boot: debug

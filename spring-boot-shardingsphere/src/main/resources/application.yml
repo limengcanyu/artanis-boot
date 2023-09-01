@@ -1,0 +1,10 @@
+spring:
+  profiles:
+#    active: shardingsphere-jdbc-single-feature-encrypt
+#    active: shardingsphere-jdbc-single-feature-sharding-tables
+#    active: shardingsphere-jdbc-single-feature-sharding-databases
+#    active: shardingsphere-jdbc-single-feature-sharding-databases-tables
+#    active: shardingsphere-jdbc-single-feature-sharding-auto-tables
+#    active: shardingsphere-jdbc-single-feature-readwrite-splitting
+    active: shardingsphere-jdbc-mixed-feature-sharding-readwrite-splitting
+

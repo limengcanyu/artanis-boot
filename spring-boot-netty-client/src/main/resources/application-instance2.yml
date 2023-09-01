@@ -1,0 +1,5 @@
+server:
+  port: 8092
+
+device:
+  id: 2

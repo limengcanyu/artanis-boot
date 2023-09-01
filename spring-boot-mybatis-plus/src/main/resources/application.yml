@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.136.128:3306/db?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: PassW0rd321
+  # Initialize a Database Using Basic SQL Scripts
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-mysql.sql
+      data-locations: classpath:db/data-mysql.sql
+
+# Logger Config
+logging:
+  level:
+    com.spring.boot: debug
+
+mybatis-plus:
+  configuration:
+    default-fetch-size: 10000
+    cache-enabled: true
+    lazy-loading-enabled: true
+    nullable-on-for-each: true
+

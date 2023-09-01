@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.spring.boot.alice</groupId>
+        <artifactId>spring-boot-alice</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <groupId>com.spring.boot.skywalking</groupId>
+    <artifactId>spring-boot-skywalking</artifactId>
+    <name>spring-boot-skywalking</name>
+    <description>spring-boot-skywalking</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.spring.boot.mybatis.plus</groupId>
+            <artifactId>spring-boot-mybatis-plus</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <!-- SkyWalking start -->
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>8.11.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-logback-1.x -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
+            <version>8.11.0</version>
+        </dependency>
+        <!-- SkyWalking end -->
+    </dependencies>
+</project>

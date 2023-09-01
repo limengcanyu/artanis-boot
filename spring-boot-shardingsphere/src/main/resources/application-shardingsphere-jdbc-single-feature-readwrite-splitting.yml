@@ -1,0 +1,27 @@
+# 读写分离
+
+spring.shardingsphere.datasource.names: write-ds,read-ds-0,ds-read-1
+
+spring.shardingsphere.datasource.write-ds.type: com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.write-ds.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.write-ds.jdbc-url: jdbc:p6spy:mysql://192.168.242.128:3306/write-ds?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.write-ds.username: root
+spring.shardingsphere.datasource.write-ds.password: PassW0rd321
+
+spring.shardingsphere.datasource.read-ds-0.type: com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.read-ds-0.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.read-ds-0.jdbc-url: jdbc:p6spy:mysql://192.168.242.128:3306/read-ds-0?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.read-ds-0.username: root
+spring.shardingsphere.datasource.read-ds-0.password: PassW0rd321
+
+spring.shardingsphere.datasource.read-ds-1.type: com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.read-ds-1.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.read-ds-1.jdbc-url: jdbc:p6spy:mysql://192.168.242.128:3306/read-ds-1?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.read-ds-1.username: root
+spring.shardingsphere.datasource.read-ds-1.password: PassW0rd321
+
+spring.shardingsphere.rules.readwrite-splitting.data-sources.readwrite_ds.type: Static
+spring.shardingsphere.rules.readwrite-splitting.data-sources.readwrite_ds.props.write-data-source-name: write-ds
+spring.shardingsphere.rules.readwrite-splitting.data-sources.readwrite_ds.props.read-data-source-names: read-ds-0,read-ds-1
+spring.shardingsphere.rules.readwrite-splitting.data-sources.readwrite_ds.load-balancer-name: round_robin
+spring.shardingsphere.rules.readwrite-splitting.load-balancers.round_robin.type: ROUND_ROBIN

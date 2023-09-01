@@ -1,0 +1,74 @@
+# 基于MybatisPlus的加密配置
+
+# 配置真实数据源
+spring.shardingsphere.datasource.names: ds1
+
+# 配置第 1 个数据源
+spring.shardingsphere.datasource.ds1.type: com.zaxxer.hikari.HikariDataSource
+# 原生方式，不打印SQL
+#spring.shardingsphere.datasource.ds1.driver-class-name: com.mysql.cj.jdbc.Driver
+#spring.shardingsphere.datasource.ds1.jdbc-url: jdbc:mysql://192.168.242.128:3306/ds1?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+# MybatisPlus打印SQL
+spring.shardingsphere.datasource.ds1.driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+spring.shardingsphere.datasource.ds1.jdbc-url: jdbc:p6spy:mysql://192.168.242.128:3306/ds1?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+spring.shardingsphere.datasource.ds1.username: root
+spring.shardingsphere.datasource.ds1.password: PassW0rd321
+
+# 该表是否使用加密列进行查询 表级别设置，会覆盖全局设置
+spring.shardingsphere.rules.encrypt.tables.t_user.query-with-cipher-column: true
+
+# 年龄 自定义INTEGER加密解密
+# t_user 表中 age 逻辑列对应的加密列名称为 age，即逻辑列与加密列名称相同
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.age.cipher-column: age
+# t_user 表中 age 逻辑列使用的加密算法名称
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.age.encryptor-name: int_encryptor
+
+# 出生日期 自定义DATE加密解密
+# t_user 表中 birthday 逻辑列对应的加密列名称为 birthday，即逻辑列与加密列名称相同
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.birthday.cipher-column: birthday
+# t_user 表中 birthday 逻辑列使用的加密算法名称
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.birthday.encryptor-name: date_encryptor
+
+# 密码 MD5加密
+# t_user 表中 pwd 逻辑列对应的加密列名称为 pwd_cipher
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.pwd.cipher-column: pwd_cipher
+# t_user 表中 pwd 逻辑列对应的明文列名称为 pwd_plain
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.pwd.plain-column: pwd_plain
+# t_user 表中 pwd 逻辑列使用的加密算法名称
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.pwd.encryptor-name: md5_encryptor
+
+# 手机号 AES加密解密
+# t_user 表中 mobile 逻辑列对应的加密列名称为 mobile_cipher
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.mobile.cipher-column: mobile_cipher
+# t_user 表中 mobile 逻辑列对应的明文列名称为 mobile_plain
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.mobile.plain-column: mobile_plain
+# t_user 表中 mobile 逻辑列使用的加密算法名称
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.mobile.encryptor-name: aes_encryptor
+
+# 身份证号 AES加密解密
+# t_user 表中 id_card 逻辑列对应的加密列名称为 id_card，即逻辑列与加密列名称相同
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.id_card.cipher-column: id_card
+# t_user 表中 id_card 逻辑列使用的加密算法名称
+spring.shardingsphere.rules.encrypt.tables.t_user.columns.id_card.encryptor-name: aes_encryptor
+
+# 加密算法配置
+# AES算法配置
+spring.shardingsphere.rules.encrypt.encryptors.aes_encryptor.type: AES # 名称为 aes_encryptor 的加密算法类型为 AES
+spring.shardingsphere.rules.encrypt.encryptors.aes_encryptor.props.aes-key-value: 123456abc # AES加密算法属性 aes-key-value 配置
+
+# MD5算法配置
+spring.shardingsphere.rules.encrypt.encryptors.md5_encryptor.type: MD5 # 名称为 md5_encryptor 的加密算法类型为 MD5
+
+# 自定义算法配置
+# 整形列算法
+spring.shardingsphere.rules.encrypt.encryptors.int_encryptor.type: INTEGER # 名称为 int_encryptor 的加密算法类型为 INTEGER
+
+# 日期列算法
+spring.shardingsphere.rules.encrypt.encryptors.date_encryptor.type: DATE # 名称为 date_encryptor 的加密算法类型为 DATE
+
+
+# 是否使用加密列进行查询。在有原文列的情况下，可以使用原文列进行查询 全局设置，会被表级别设置覆盖
+spring.shardingsphere.rules.encrypt.queryWithCipherColumn: true
+
+# sharding-jdbc打印SQL
+spring.shardingsphere.props.sql-show: true

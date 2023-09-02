@@ -9,11 +9,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.spring.boot.data.cassandra</groupId>
-    <artifactId>spring-boot-data-cassandra</artifactId>
+    <groupId>com.spring.boot.cassandra</groupId>
+    <artifactId>spring-boot-cassandra</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-data-cassandra</name>
-    <description>spring-boot-data-cassandra</description>
+    <name>spring-boot-cassandra</name>
+    <description>spring-boot-cassandra</description>
 
     <dependencies>
         <dependency>

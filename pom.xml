@@ -36,7 +36,7 @@
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
-        <module>spring-boot-data-cassandra</module>
+        <module>spring-boot-cassandra</module>
         <module>spring-boot-data-elasticsearch</module>
         <module>spring-boot-data-graphql</module>
         <module>spring-boot-data-jdbc</module>

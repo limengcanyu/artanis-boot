@@ -1,10 +1,10 @@
-package com.spring.boot.data.cassandra;
+package com.spring.boot.cassandra;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootDataCassandraApplicationTests {
+class SpringBootCassandraApplicationTests {
 
     @Test
     void contextLoads() {

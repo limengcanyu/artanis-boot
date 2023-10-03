@@ -34,6 +34,7 @@
         <module>spring-boot-camunda</module>
         <module>spring-boot-clickhouse</module>
         <module>spring-boot-configuration-processor</module>
+        <module>spring-boot-couchbase</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
         <module>spring-boot-cassandra</module>

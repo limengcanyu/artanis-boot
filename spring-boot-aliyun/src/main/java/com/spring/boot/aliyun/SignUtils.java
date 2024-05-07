@@ -1,7 +1,6 @@
 package com.spring.boot.aliyun;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Base64Utils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -10,10 +9,7 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-import java.util.SimpleTimeZone;
+import java.util.*;
 
 @Slf4j
 public class SignUtils {
@@ -52,7 +48,7 @@ public class SignUtils {
             stringToSign.append(percentEncode("/")).append(SEPARATOR);
             StringBuilder canonicalizedQueryString = new StringBuilder();
 
-            for(String key : sortedKeys) {
+            for (String key : sortedKeys) {
                 // 这里注意编码 key 和 value
                 canonicalizedQueryString.append("&")
                         .append(percentEncode(key)).append("=")
@@ -69,7 +65,7 @@ public class SignUtils {
             mac.init(new SecretKeySpec(key.getBytes(ENCODING), ALGORITHM));
             byte[] signData = mac.doFinal(stringToSign.toString().getBytes(ENCODING));
 
-            signature = new String(Base64Utils.encode(signData));
+            signature = new String(Base64.getEncoder().encodeToString(signData));
             log.debug("签名字符串: {}", signature);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();

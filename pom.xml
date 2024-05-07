@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.3.0</version>
     </parent>
 
     <groupId>com.spring.boot.alice</groupId>
@@ -37,13 +37,15 @@
         <module>spring-boot-couchbase</module>
         <module>spring-boot-custom-starter</module>
         <module>spring-boot-custom-starter-test</module>
-        <module>spring-boot-cassandra</module>
+        <module>spring-boot-data-cassandra</module>
         <module>spring-boot-data-elasticsearch</module>
         <module>spring-boot-data-graphql</module>
         <module>spring-boot-data-jdbc</module>
         <module>spring-boot-data-jooq</module>
+        <module>spring-boot-data-jpa</module>
         <module>spring-boot-data-liteflow</module>
         <module>spring-boot-data-mongodb</module>
+        <module>spring-boot-data-neo4j</module>
         <module>spring-boot-data-pulsar</module>
         <module>spring-boot-data-quartz</module>
         <module>spring-boot-data-r2dbc</module>
@@ -55,7 +57,6 @@
         <module>spring-boot-data-redisson-server</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-doris</module>
-        <module>spring-boot-elasticsearch</module>
         <module>spring-boot-example</module>
         <module>spring-boot-flaw</module>
         <module>spring-boot-flowable</module>
@@ -76,8 +77,6 @@
         <module>spring-boot-json</module>
         <module>spring-boot-jwt</module>
         <module>spring-boot-kafka</module>
-        <module>spring-boot-kafka-consumer</module>
-        <module>spring-boot-kafka-producer</module>
         <module>spring-boot-kafka-streams</module>
         <module>spring-boot-knife4j</module>
         <module>spring-boot-kubernetes</module>
@@ -92,7 +91,6 @@
         <module>spring-boot-mybatisplus-sharding-jdbc</module>
         <module>spring-boot-mycat</module>
         <module>spring-boot-nebula</module>
-        <module>spring-boot-neo4j</module>
         <module>spring-boot-netty</module>
         <module>spring-boot-netty-client</module>
         <module>spring-boot-netty-common</module>
@@ -149,11 +147,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>8.4.0</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-dependencies</artifactId>
-                <version>3.0.0-M8</version>
+                <version>3.2.3</version>
                 <type>pom</type>
             </dependency>
 
@@ -161,7 +166,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.17.6</version>
+                <version>1.19.8</version>
                 <type>pom</type>
             </dependency>
 
@@ -169,40 +174,41 @@
             <dependency>
                 <groupId>me.ahoo.cosid</groupId>
                 <artifactId>cosid-spring-boot-starter</artifactId>
-                <version>2.0.5</version>
+                <version>2.8.1</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
-                <version>2.11.1</version>
+                <version>2.12.0</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>3.19.1</version>
+                <version>3.30.0</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.yomahub/tlog-all-spring-boot-starter -->
             <dependency>
                 <groupId>com.yomahub</groupId>
                 <artifactId>tlog-all-spring-boot-starter</artifactId>
-                <version>1.5.0</version>
+                <version>1.5.2</version>
             </dependency>
 
-
+            <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>3.3.4</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -236,28 +242,35 @@
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
-            <version>2.0.21</version>
+            <version>2.0.50</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
+            <version>33.2.0-jre</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.10</version>
+            <version>5.8.27</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.github.ifeilong/feilong -->
         <dependency>
             <groupId>com.github.ifeilong</groupId>
             <artifactId>feilong</artifactId>
-            <version>3.3.9</version>
+            <version>4.0.8</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.14.0</version>
         </dependency>
     </dependencies>
 
@@ -267,17 +280,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.5</version>
                 <configuration>
                     <!-- Skipping Tests -->
                     <skipTests>true</skipTests>

@@ -1,6 +1,5 @@
 package com.spring.boot.mongo.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mongodb.ClientSessionOptions;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoClient;
@@ -152,6 +151,5 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void select() {
         List<Document> documentList = mongoTemplate.findAll(Document.class, "artanis");
-        System.out.println("documentList: " + JSONObject.toJSONString(documentList));
     }
 }

@@ -1,6 +1,5 @@
 package com.spring.boot.mongo;
 
-import com.alibaba.fastjson.JSONObject;
 import com.spring.boot.mongo.entity.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,6 @@ public class AggregationPipelineOperatorsTest {
 
         AggregationResults<Person> results = mongoTemplate.aggregate(agg, "person", Person.class);
         List<Person> mappedResults = results.getMappedResults();
-        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     @Test

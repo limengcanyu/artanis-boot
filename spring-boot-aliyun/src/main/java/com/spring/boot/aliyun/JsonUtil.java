@@ -1,6 +1,6 @@
 package com.spring.boot.aliyun;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 public class JsonUtil {
     public static JSONObject parse(Object object) {

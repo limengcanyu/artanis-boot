@@ -1,7 +1,6 @@
 package com.spring.boot.mongo.old;
 
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
@@ -17,7 +16,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -71,7 +73,6 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
         List<Document> mappedResults = result.getMappedResults();
-        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     @Test
@@ -89,7 +90,6 @@ public class AggregationOperationsTest {
                 .and("item_020").gt(0.00);
 
         List<Document> employeeList = mongoTemplate.find(Query.query(criteria), Document.class, "group_test");
-        log.debug("employeeList: {}", JSONObject.toJSONString(employeeList));
 
         Aggregation aggregation = newAggregation(
                 match(criteria),
@@ -98,7 +98,6 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, "group_test", Document.class);
         List<Document> mappedResults = result.getMappedResults();
-        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     @Data
@@ -298,7 +297,6 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(aggregation, Document.class);
         List<Document> zipInfoStatsList = result.getMappedResults();
-        log.debug("zipInfoStatsList: {}", JSONObject.toJSONString(zipInfoStatsList));
 
 //        AggregationResults<ZipInfoStats> result = mongoTemplate.aggregate(aggregation, ZipInfoStats.class);
 //        List<ZipInfoStats> zipInfoStatsList = result.getMappedResults();
@@ -376,7 +374,6 @@ public class AggregationOperationsTest {
 
         AggregationResults<Product> result = mongoTemplate.aggregate(agg, Product.class);
         List<Product> mappedResults = result.getMappedResults();
-        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     @Test
@@ -390,7 +387,6 @@ public class AggregationOperationsTest {
 
         AggregationResults<Document> result = mongoTemplate.aggregate(agg, Document.class);
         List<Document> mappedResults = result.getMappedResults();
-        log.debug("mappedResults: {}", JSONObject.toJSONString(mappedResults));
     }
 
     public class InventoryItem {

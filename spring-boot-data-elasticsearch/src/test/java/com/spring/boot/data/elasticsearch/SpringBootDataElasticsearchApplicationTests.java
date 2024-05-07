@@ -1,6 +1,7 @@
 package com.spring.boot.data.elasticsearch;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import com.spring.boot.data.elasticsearch.entity.Address;
 import org.elasticsearch.client.RestClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

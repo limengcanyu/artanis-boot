@@ -1,6 +1,5 @@
 package com.spring.boot.mongo.old;
 
-import com.alibaba.fastjson.JSONObject;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -111,7 +110,6 @@ public class IndexAndCollectionManagementTest {
         );
         List<Document> resultDocumentList = mongoTemplate.find(query.skip(1000000).limit(20), Document.class, "index_test");
         logger.debug("执行查询耗时毫秒: {}", System.currentTimeMillis() - start);
-        logger.debug("resultDocumentList: {}", JSONObject.toJSONString(resultDocumentList));
     }
 
 }

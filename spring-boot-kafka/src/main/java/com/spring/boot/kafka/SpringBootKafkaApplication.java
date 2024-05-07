@@ -1,5 +1,6 @@
 package com.spring.boot.kafka;
 
+import com.spring.boot.kafka.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -43,4 +44,26 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         logger.info(cr.toString());
         latch.countDown();
     }
+
+    //    @KafkaListener(topics = "my-replicated-topic")
+//    public void myReplicatedTopicProcess(String content) {
+//        log.debug("my-replicated-topic receive message: {}", content);
+//    }
+
+    @KafkaListener(topics = "someTopic")
+    public void someTopicProcess(String content) {
+        log.debug("someTopic receive message: {}", content);
+    }
+
+    /**
+     * 直接接收负载对象
+     *
+     * @param user
+     * @throws Exception
+     */
+    @KafkaListener(topics = "userTopic")
+    public void userTopicProcess(User user) {
+        log.debug("userTopic receive message: {}", user);
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.spring.boot.mongo.old;
 
-import com.alibaba.fastjson.JSONObject;
 import com.spring.boot.mongo.entity.Person;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -34,7 +33,6 @@ public class QueryingDocumentsTest {
         mongoOps.insert(person);
 
         person = mongoOps.findById(person.getId(), Person.class);
-        logger.debug("person: {}", JSONObject.toJSONString(person));
 
         BasicQuery query = new BasicQuery("{ age : { $lt : 50 }, accounts.balance : { $gt : 1000.00 }}");
 //        BasicQuery query = new BasicQuery("{ age : { $lt : 50 }}");

@@ -1,6 +1,5 @@
 package com.spring.boot.mongo;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.spring.boot.mongo.entity.Person;
@@ -47,17 +46,14 @@ public class QueryOperatorsTest {
         List<Person> personList = mongoTemplate.query(Person.class)
                 .matching(Query.query(Criteria.where("age").lt(50).and("accounts.balance").gt(1000.00d)).skip(50).limit(50))
                 .all();
-        log.debug("personList: {}", JSONObject.toJSONString(personList));
 
         personList = mongoTemplate.findAll(Person.class);
-        log.debug("personList: {}", JSONObject.toJSONString(personList));
     }
 
     @Test
     public void plainJSONQuery() {
         BasicQuery query = new BasicQuery("{ age : { $lt : 50 }, name : { $gt : '1000.00' }}");
         List<Person> personList = mongoTemplate.find(query, Person.class);
-        log.debug("personList: {}", JSONObject.toJSONString(personList));
     }
 
     @Test

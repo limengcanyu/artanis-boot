@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
+import org.springframework.data.mongodb.core.aggregation.DateOperators;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexOperations;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -107,5 +112,34 @@ public class SpringBootMongoApplicationTest {
 
         // 查询数据
         productRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void test2() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+//        Aggregation aggregation = Aggregation.newAggregation(
+//                Aggregation.project("createTime")
+//                        // 该方式生成的是字符串
+////                        .and(DateOperators.DateToString.dateOf("createTime").toString("yyyy-MM-dd")).as("createDate"),
+//                        // 该方式生成的是Date
+//                        .and(DateOperators.DateTrunc.truncateValueOf("createTime").to("day")).as("createDate"),
+//                Aggregation.group("createDate")
+//                        .count().as("count")
+//                        .first("batch").as("batch")
+//                        .first("productCode").as("productCode")
+//                        .first("expireDate").as("expireDate")
+//        );
+
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.group(DateOperators.DateTrunc.truncateValueOf("createTime").to("day").toString())
+                        .count().as("count")
+                        .first("batch").as("batch")
+                        .first("productCode").as("productCode")
+                        .first("expireDate").as("expireDate")
+        );
+
+        System.out.println(aggregation);
+
     }
 }

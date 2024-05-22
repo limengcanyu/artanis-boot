@@ -1,4 +1,4 @@
-package com.spring.boot.mongo;
+package com.spring.boot.mongo.repository;
 
 import com.spring.boot.mongo.entity.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;

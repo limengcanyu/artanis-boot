@@ -1,7 +1,11 @@
 package com.spring.boot.mongo;
 
 import com.mongodb.client.MongoCollection;
+import com.spring.boot.mongo.entity.Inventory;
 import com.spring.boot.mongo.entity.Product;
+import com.spring.boot.mongo.repository.InventoryRepository;
+import com.spring.boot.mongo.repository.ProductRepository;
+import org.apache.commons.lang3.time.DateUtils;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +13,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
+import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.aggregation.DateOperators;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 @SpringBootTest
 public class SpringBootMongoApplicationTest {
@@ -28,6 +37,9 @@ public class SpringBootMongoApplicationTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
     @Test
     public void test1() throws InterruptedException {
@@ -118,28 +130,32 @@ public class SpringBootMongoApplicationTest {
     public void test2() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-//        Aggregation aggregation = Aggregation.newAggregation(
-//                Aggregation.project("createTime")
-//                        // 该方式生成的是字符串
-////                        .and(DateOperators.DateToString.dateOf("createTime").toString("yyyy-MM-dd")).as("createDate"),
-//                        // 该方式生成的是Date
-//                        .and(DateOperators.DateTrunc.truncateValueOf("createTime").to("day")).as("createDate"),
-//                Aggregation.group("createDate")
-//                        .count().as("count")
-//                        .first("batch").as("batch")
-//                        .first("productCode").as("productCode")
-//                        .first("expireDate").as("expireDate")
-//        );
-
         Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.group(DateOperators.DateTrunc.truncateValueOf("createTime").to("day").toString())
-                        .count().as("count")
-                        .first("batch").as("batch")
-                        .first("productCode").as("productCode")
-                        .first("expireDate").as("expireDate")
+                Aggregation.match(Criteria.where("productionDate").exists(true)),
+                Aggregation.match(Criteria.where("productCode").exists(true)),
+                Aggregation.match(Criteria.where("storeCode").exists(true)),
+                Aggregation.project("productionDate", "productCode", "storeCode")
+                        .and(DateOperators.DateTrunc.truncateValueOf("productionDate").to("day")).as("productionDate")
+                        .and(ConvertOperators.valueOf(DateOperators.DateToString.dateOf("productionDate").toString("%Y-%m-%d")).convertToDate()).as("productionDate")
+                        .and(ConvertOperators.ToDate.toDate(DateOperators.DateToString.dateOf("productionDate").toString("%Y-%m-%d"))).as("productionDate"),
+                Aggregation.group("productionDate", "productCode", "storeCode")
+                                .first("productionDate").as("production_date")
+                                .first("productCode").as("product_code")
+                                .first("storeCode").as("store_code"),
+                Aggregation.sort(Sort.Direction.DESC, "productionDate")
         );
 
-        System.out.println(aggregation);
+        AtomicInteger count = new AtomicInteger();
+        Stream<Inventory> inventoryStream = mongoTemplate.aggregateStream(aggregation, Inventory.class, Inventory.class);
+        inventoryStream.forEach(inventory -> {
+            Date curDay = inventory.getProductionDate();
+            Date nextDay = DateUtils.addDays(curDay, 1);
+            Criteria criteria = Criteria.where("productionDate").gte(curDay).lt(nextDay)
+                    .and("productCode").is(inventory.getProductCode())
+                    .and("storeCode").is(inventory.getStoreCode());
+            List<Inventory> inventoryList = mongoTemplate.find(Query.query(criteria), Inventory.class);
+
+        });
 
     }
 }

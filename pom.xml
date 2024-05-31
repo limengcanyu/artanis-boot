@@ -197,7 +197,15 @@
                 <artifactId>tlog-all-spring-boot-starter</artifactId>
                 <version>1.5.2</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>3.3.4</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <dependencies>

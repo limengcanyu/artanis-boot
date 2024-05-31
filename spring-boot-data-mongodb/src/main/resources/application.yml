@@ -1,10 +1,15 @@
 spring:
+  application:
+    name: spring-boot-data-mongodb
   data:
     mongodb:
-      host: 192.168.242.129
-      port: 27017
+      uri: mongodb://localhost:27017/test?retryWrites=true&w=majority
 #      additional-hosts:
 #        - "mongoserver2.example.com:23456"
-      database: test
       username: root
       password: PassW0rd321
+
+logging:
+  level:
+    com.spring.boot: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG

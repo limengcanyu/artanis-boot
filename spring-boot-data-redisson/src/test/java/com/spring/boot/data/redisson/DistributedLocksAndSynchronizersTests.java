@@ -1,12 +1,16 @@
 package com.spring.boot.data.redisson;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -16,25 +20,43 @@ class DistributedLocksAndSynchronizersTests {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Test
-    void contextLoads() {
+    ThreadPoolExecutor threadPoolExecutor;
+
+    @BeforeEach
+    void beforeEach() {
+        threadPoolExecutor = new ThreadPoolExecutor(5, 5, 60, TimeUnit.SECONDS, new SynchronousQueue<>());
+    }
+
+    @AfterEach
+    void afterEach() {
+        threadPoolExecutor.shutdown();
+        try {
+            boolean termination = threadPoolExecutor.awaitTermination(60, TimeUnit.SECONDS);
+            if (termination) {
+                log.info("All threads terminated");
+            } else {
+                log.error("All threads terminated timeout");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void lock() throws InterruptedException {
         for (int i = 0; i < 5; i++) {
-            new Thread(() -> {
+            threadPoolExecutor.submit(() -> {
                 try {
                     RLock lock = redissonClient.getLock("myLock");
 
                     // wait for lock aquisition up to 100 seconds
                     // and automatically unlock it after 10 seconds
-                    boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
+                    boolean res = lock.tryLock(100, 10, TimeUnit.MICROSECONDS);
                     log.debug("Thread: {} tryLock: {}", Thread.currentThread().getId(), res);
                     if (res) {
                         try {
                             log.debug("Thread: {} do something begin", Thread.currentThread().getId());
-                            TimeUnit.SECONDS.sleep(new Random().nextInt(5));
+                            TimeUnit.MICROSECONDS.sleep(new Random().nextInt(5));
                             log.debug("Thread: {} do something end", Thread.currentThread().getId());
                         } finally {
                             lock.unlock();
@@ -42,18 +64,16 @@ class DistributedLocksAndSynchronizersTests {
                         }
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.error("Exception: ", e);
                 }
-            }).start();
+            });
         }
-
-        TimeUnit.SECONDS.sleep(600);
     }
 
     @Test
     void lockAsync() throws InterruptedException {
         for (int i = 0; i < 5; i++) {
-            new Thread(() -> {
+            threadPoolExecutor.submit(() -> {
                 RLock lock = redissonClient.getLock("myLock");
 
                 // wait for lock aquisition up to 100 seconds
@@ -77,10 +97,8 @@ class DistributedLocksAndSynchronizersTests {
                         }
                     }
                 });
-            }).start();
+            });
         }
-
-        TimeUnit.SECONDS.sleep(600);
     }
 
     @Test
@@ -92,12 +110,12 @@ class DistributedLocksAndSynchronizersTests {
 
                     // wait for lock aquisition up to 100 seconds
                     // and automatically unlock it after 10 seconds
-                    boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
+                    boolean res = lock.tryLock(500, 6000, TimeUnit.MICROSECONDS);
                     log.debug("Thread: {} tryLock: {}", Thread.currentThread().getId(), res);
                     if (res) {
                         try {
                             log.debug("Thread: {} do something begin", Thread.currentThread().getId());
-                            TimeUnit.SECONDS.sleep(new Random().nextInt(5));
+                            TimeUnit.MICROSECONDS.sleep(new Random().nextInt(5));
                             log.debug("Thread: {} do something end", Thread.currentThread().getId());
                         } finally {
                             lock.unlock();
@@ -110,7 +128,7 @@ class DistributedLocksAndSynchronizersTests {
             }).start();
         }
 
-        TimeUnit.SECONDS.sleep(600);
+        TimeUnit.SECONDS.sleep(10);
     }
 
     @Test

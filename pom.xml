@@ -55,6 +55,7 @@
         <module>spring-boot-data-redisson-client</module>
         <module>spring-boot-data-redisson-interface</module>
         <module>spring-boot-data-redisson-server</module>
+        <module>spring-boot-disruptor</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-doris</module>
         <module>spring-boot-example</module>

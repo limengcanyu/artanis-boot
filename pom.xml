@@ -11,8 +11,8 @@
         <version>3.3.0</version>
     </parent>
 
-    <groupId>com.spring.boot.alice</groupId>
-    <artifactId>spring-boot-alice</artifactId>
+    <groupId>org.artanis.boot</groupId>
+    <artifactId>artanis-boot</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 

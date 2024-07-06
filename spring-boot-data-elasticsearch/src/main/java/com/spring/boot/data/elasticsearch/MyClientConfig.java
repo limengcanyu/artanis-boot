@@ -17,7 +17,7 @@
 //
 //    @Override
 //    public ClientConfiguration clientConfiguration() {
-//        File certFile = new File("E:/IdeaProjects/spring-boot-alice/spring-boot-data-elasticsearch/src/main/resources/cert/http_ca.crt");
+//        File certFile = new File("E:/IdeaProjects/artanis-boot/spring-boot-data-elasticsearch/src/main/resources/cert/http_ca.crt");
 //
 //        SSLContext sslContext = null;
 //        try {

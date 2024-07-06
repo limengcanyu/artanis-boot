@@ -31,7 +31,7 @@ rm -Force E:\迅雷下载\docker-build.tar
 cp target\docker\jkube\spring-boot-jkube\latest\tmp\docker-build.tar E:\迅雷下载
 
 rm -Force E:\迅雷下载\docker-build.tar
-cp target\docker\spring-boot-alice\spring-boot-jkube\0.0.1-SNAPSHOT\tmp\docker-build.tar E:\迅雷下载
+cp target\docker\artanis-boot\spring-boot-jkube\0.0.1-SNAPSHOT\tmp\docker-build.tar E:\迅雷下载
 
 # 从文件加载镜像
 docker load --input docker-build.tar
@@ -41,19 +41,19 @@ docker image ls
 docker inspect spring-boot-jkube:0.0.1-SNAPSHOT
 
 # 查看镜像信息 指定项内容
-docker inspect -f {{".Size"}} spring-boot-alice/spring-boot-jib:0.0.1-SNAPSHOT
+docker inspect -f {{".Size"}} artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 查看镜像历史
-docker history spring-boot-alice/spring-boot-jib:0.0.1-SNAPSHOT
+docker history artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 查看镜像历史 具体信息
-docker history --no-trunc spring-boot-alice/spring-boot-jib:0.0.1-SNAPSHOT
+docker history --no-trunc artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 运行容器
 docker run -d --name spring-boot-jkube -p 8080:8080 jkube/spring-boot-jkube:latest
 docker ps
 
-docker run -d --name spring-boot-jkube -p 8080:8080 spring-boot-alice/spring-boot-jkube:0.0.1-SNAPSHOT
+docker run -d --name spring-boot-jkube -p 8080:8080 artanis-boot/spring-boot-jkube:0.0.1-SNAPSHOT
 docker ps
 
 # 查看容器日志
@@ -66,8 +66,8 @@ curl http://localhost:8080/hello
 clear
 docker rm -f spring-boot-jkube
 docker rmi spring-boot-jkube:0.0.1-SNAPSHOT
-docker rmi spring-boot-alice/spring-boot-jkube:0.0.1-SNAPSHOT
-docker rmi spring-boot-alice/spring-boot-jkube:latest
+docker rmi artanis-boot/spring-boot-jkube:0.0.1-SNAPSHOT
+docker rmi artanis-boot/spring-boot-jkube:latest
 docker rmi jkube/spring-boot-jkube:latest
 docker ps -a && docker images
 

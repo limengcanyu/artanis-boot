@@ -23,33 +23,33 @@ $env:path=-join("E:\Java\temurin-17.0.5\bin;", "$env:path")
 mvn clean compile
 
 rm -Force E:\迅雷下载\spring-boot-jib.tar
-cp E:\IdeaProjects\artanis-boot\spring-boot-jib\target\spring-boot-jib.tar E:\迅雷下载
+cp E:\IdeaProjects\rock-boot\spring-boot-jib\target\spring-boot-jib.tar E:\迅雷下载
 
 # 从文件加载镜像
 docker load --input spring-boot-jib.tar
-docker image ls | grep artanis-boot
+docker image ls | grep rock-boot
 
 # 查看镜像信息
-docker inspect artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker inspect rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 查看镜像信息 指定项内容
-docker inspect -f {{".Size"}} artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker inspect -f {{".Size"}} rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 查看镜像历史
-docker history artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker history rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 查看镜像历史 具体信息
-docker history --no-trunc artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker history --no-trunc rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 运行容器
-docker run -d --name spring-boot-jib -p 8080:8080 artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker run -d --name spring-boot-jib -p 8080:8080 rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 
 # 调用接口
 curl http://localhost:8080/hello
 
 # 清理容器和镜像
 docker rm -f spring-boot-jib
-docker rmi artanis-boot/spring-boot-jib:0.0.1-SNAPSHOT
+docker rmi rock-boot/spring-boot-jib:0.0.1-SNAPSHOT
 docker ps -a && docker images
 
 ```

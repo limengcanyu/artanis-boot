@@ -63,7 +63,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public String getResourceFromFileSystemResource() {
-        FileSystemResource fileSystemResource = new FileSystemResource("D:/IdeaProjects-MyProject/artanis-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
+        FileSystemResource fileSystemResource = new FileSystemResource("D:/IdeaProjects-MyProject/rock-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
         try {
             InputStream inputStream = fileSystemResource.getInputStream();
             String resource = new String(inputStream.readAllBytes());

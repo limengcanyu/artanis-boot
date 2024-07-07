@@ -40,14 +40,14 @@ public class FileTest {
 
     @Test
     void fileSystemResource() throws IOException {
-        FileSystemResource fileSystemResource = new FileSystemResource("D:/IdeaProjects-MyProject/artanis-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
+        FileSystemResource fileSystemResource = new FileSystemResource("D:/IdeaProjects-MyProject/rock-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
         InputStream inputStream = fileSystemResource.getInputStream();
         System.out.println(new String(inputStream.readAllBytes()));
     }
 
     @Test
     void inputStreamResource() throws IOException {
-        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream("D:/IdeaProjects-MyProject/artanis-boot/spring-boot-okhttp/src/main/resources/client/ds.crt"));
+        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream("D:/IdeaProjects-MyProject/rock-boot/spring-boot-okhttp/src/main/resources/client/ds.crt"));
         InputStream inputStream = inputStreamResource.getInputStream();
         System.out.println(new String(inputStream.readAllBytes()));
     }
@@ -55,7 +55,7 @@ public class FileTest {
     @Test
     void applicationContext() throws IOException {
         Resource resource = applicationContext.getResource("classpath:client/ds.crt");
-//        Resource resource = applicationContext.getResource("file:D:/IdeaProjects-MyProject/artanis-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
+//        Resource resource = applicationContext.getResource("file:D:/IdeaProjects-MyProject/rock-boot/spring-boot-okhttp/src/main/resources/client/ds.crt");
         InputStream inputStream = resource.getInputStream();
         System.out.println(new String(inputStream.readAllBytes()));
     }

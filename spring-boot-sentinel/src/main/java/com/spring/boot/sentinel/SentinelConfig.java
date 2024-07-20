@@ -6,12 +6,11 @@ import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,23 +35,23 @@ public class SentinelConfig {
     private void initFlowRules() {
         log.debug("依赖注入完成，执行初始化操作...");
 
-        // 限流规则
+        // QPS限流
         List<FlowRule> rules = new ArrayList<>();
-//        FlowRule rule = new FlowRule();
-//        rule.setResource("sayHello"); // 指定限流资源
-//        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-//        rule.setCount(2); // Set limit QPS to 2
-//        rules.add(rule);
-//        FlowRuleManager.loadRules(rules);
-
         FlowRule rule = new FlowRule();
         rule.setResource("sayHello"); // 指定限流资源
-        rule.setGrade(RuleConstant.FLOW_GRADE_THREAD);
-        rule.setCount(2); // Set limit THREAD to 2
-        rule.setLimitApp("default");
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setCount(2); // Set limit QPS to 2
         rules.add(rule);
         FlowRuleManager.loadRules(rules);
 
+        // 线程数模式限流
+//        FlowRule rule = new FlowRule();
+//        rule.setResource("sayHello"); // 指定限流资源
+//        rule.setGrade(RuleConstant.FLOW_GRADE_THREAD);
+//        rule.setCount(2); // Set limit THREAD to 2
+//        rule.setLimitApp("default");
+//        rules.add(rule);
+//        FlowRuleManager.loadRules(rules);
 
         // 降级规则，可以多个degradeRule rule
         // DegradeRuleManager.getRules()可以获取到已经设置的降级规则

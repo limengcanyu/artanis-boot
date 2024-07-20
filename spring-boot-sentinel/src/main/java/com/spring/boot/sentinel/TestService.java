@@ -92,12 +92,12 @@ public class TestService {
     )
     public String sayHello(String name) {
 //        log.debug("currentThread id: " + Thread.currentThread().getId() + " name: " + Thread.currentThread().getName());
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            log.debug("Interrupted!", e);
-            Thread.currentThread().interrupt();
-        }
+//        try {
+//            TimeUnit.SECONDS.sleep(10);
+//        } catch (InterruptedException e) {
+//            log.debug("Interrupted!", e);
+//            Thread.currentThread().interrupt();
+//        }
 
         return "Hello, " + name + " currentThread id: " + Thread.currentThread().getId() + " name: " + Thread.currentThread().getName();
     }

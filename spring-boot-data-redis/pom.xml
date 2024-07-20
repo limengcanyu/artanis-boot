@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
@@ -27,8 +32,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.spring.boot.skywalking</groupId>
-            <artifactId>spring-boot-skywalking</artifactId>
+            <groupId>com.spring.boot.common</groupId>
+            <artifactId>spring-boot-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

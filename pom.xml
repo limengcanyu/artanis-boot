@@ -33,6 +33,7 @@
         <module>spring-boot-caffeine</module>
         <module>spring-boot-camunda</module>
         <module>spring-boot-clickhouse</module>
+        <module>spring-boot-common</module>
         <module>spring-boot-configuration-processor</module>
         <module>spring-boot-couchbase</module>
         <module>spring-boot-custom-starter</module>
@@ -64,6 +65,7 @@
         <module>spring-boot-generator</module>
         <module>spring-boot-graphql</module>
         <module>spring-boot-graphql-java-kickstart</module>
+        <module>spring-boot-guava</module>
         <module>spring-boot-hazelcast</module>
         <module>spring-boot-httpcomponents</module>
         <module>spring-boot-huaweicloud</module>
@@ -206,7 +208,6 @@
                 <version>3.3.4</version>
             </dependency>
         </dependencies>
-
     </dependencyManagement>
 
     <dependencies>
@@ -250,7 +251,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.2.0-jre</version>
+            <version>33.2.1-jre</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->

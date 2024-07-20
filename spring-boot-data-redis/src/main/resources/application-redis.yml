@@ -1,8 +1,9 @@
-spring:
-  data:
-    redis:
-      host: 192.168.242.129
-      port: 6379
 
 server:
   port: 8091
+
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
